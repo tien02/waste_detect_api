@@ -1,0 +1,8 @@
+__pycache__
+runs
+demo.jpg
+demo.mp4
+.DS_Store
+weights
+.gitignore
+.dockerignore
