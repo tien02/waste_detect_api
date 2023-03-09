@@ -1,7 +1,6 @@
 import config
 import torch
 import numpy as np
-import matplotlib.pyplot as plt
 from termcolor import colored
 import gdown
 import os
@@ -14,24 +13,6 @@ def read_img(image_path: str, to_rgb:bool = True, resize:bool = False) -> np.arr
     if resize:
         img = cv.resize(img, config.IMG_SIZE, interpolation = cv.INTER_AREA)
     return img
-
-def show_img(image_path:str):
-    img = read_img(image_path=image_path)
-    plt.axis('off')
-    plt.imshow(img)
-    plt.show()
-
-
-def test_read_show_img(test_img_path:str = "demo.jpg"):
-    img = read_img(test_img_path)
-    if len(img.shape) == 3:
-        print(colored("=== PASS ==="), "green")
-    else:
-        print(colored("=== ERROR ===", "red"))
-
-    show_img(test_img_path)
-    
-    print(colored("=== PASS ===", "green"))
 
 def load_model():
     ckpt_path = check_ckpt_file()
@@ -51,6 +32,3 @@ def check_ckpt_file():
     else:
         print(colored("Find existing ckpt file in ./weights", "blue"))
     return "weights/best.pt"
-
-if __name__ == "__main__":
-    test_read_show_img()

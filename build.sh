@@ -1,0 +1,1 @@
+docker build -t waste_detection_api . 
