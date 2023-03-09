@@ -51,3 +51,5 @@ setuptools>=65.5.1 # Snyk vulnerability fix
 fastapi==0.93.0
 uvicorn==0.20.0
 python-multipart
+gdown
+termcolor
