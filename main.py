@@ -1,7 +1,8 @@
 import os, shutil
 from fastapi import FastAPI, File, UploadFile, Query, Response
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.encoders import jsonable_encoder
 from src import read_img, load_model
 
 model = load_model()
@@ -37,20 +38,26 @@ async def detection(
     ):
     
     # read image
-    img = read_img(image_path=img_file.file)
+    img, img_shape = read_img(image_path=img_file.file)
 
     # inference
     prediction = model(img)
 
-    json_result = prediction.pandas().xyxy[0].to_json(orient="records")
-    if bb_format == 'xywh':
-        json_result = prediction.pandas().xywh[0].to_json(orient="records")
-    
     if return_image:
         if os.path.exists('runs'):
             shutil.rmtree('runs')
         prediction.save()
         return FileResponse('./runs/detect/exp/image0.jpg')
+    
+    pred_df = prediction.pandas().xyxy[0]   # pandas dataframe
+    if bb_format == 'xywh':
+        pred_df = prediction.pandas().xywh[0]   # pandas dataframe
 
-    # return json_result
-    return Response(json_result, media_type="application/json")
+    
+    json_result = {
+        'model_predict': pred_df.to_dict('record'),
+        'height': img_shape[0],
+        'width': img_shape[1],
+    }
+
+    return JSONResponse(content=json_result)

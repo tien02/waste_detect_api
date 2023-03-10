@@ -12,7 +12,7 @@ def read_img(image_path: str, to_rgb:bool = True, resize:bool = False) -> np.arr
         img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
     if resize:
         img = cv.resize(img, config.IMG_SIZE, interpolation = cv.INTER_AREA)
-    return img
+    return img, img.shape
 
 def load_model():
     ckpt_path = check_ckpt_file()
