@@ -1,0 +1,1 @@
+docker run -it --rm waste_detection_api bash

@@ -1,1 +1,1 @@
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+docker run --name api_detect_waste -p 80:80 waste_detection_api
