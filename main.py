@@ -1,8 +1,7 @@
 import os, shutil
-from fastapi import FastAPI, File, UploadFile, Query, Response
+from fastapi import FastAPI, File, UploadFile, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
-from fastapi.encoders import jsonable_encoder
 from src import read_img, load_model
 
 model = load_model()
@@ -53,9 +52,8 @@ async def detection(
     if bb_format == 'xywh':
         pred_df = prediction.pandas().xywh[0]   # pandas dataframe
 
-    
     json_result = {
-        'model_predict': pred_df.to_dict('record'),
+        'model_predict': pred_df.to_dict('records'),
         'height': img_shape[0],
         'width': img_shape[1],
     }

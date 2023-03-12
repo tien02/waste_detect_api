@@ -13,7 +13,7 @@
 ### Run on local
 
 ```
-uvicorn_run.sh
+bash uvicorn_run.sh
 ```
 
 ### Run on Docker
