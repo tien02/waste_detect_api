@@ -45,7 +45,7 @@ async def detection(
         image = Image.open(img_file.file)
         if image.mode in ("RGBA", "P"):
             image = image.convert("RGB")
-        width, height = image.size
+        height, width = image.size
     except:
         raise HTTPException(status_code=500, detail="Something went wrong when reading image")
 
