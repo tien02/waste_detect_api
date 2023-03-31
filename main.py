@@ -1,5 +1,8 @@
 import os, shutil
-from fastapi import FastAPI, File, UploadFile, Query
+from PIL import Image
+import cv2 as cv
+import numpy as np
+from fastapi import FastAPI, File, UploadFile, Query, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from src import read_img, load_model
@@ -37,10 +40,17 @@ async def detection(
     ):
     
     # read image
-    img, img_shape = read_img(image_path=img_file.file)
+    # img, img_shape = read_img(image_path=img_file.filename)
+    try:
+        image = Image.open(img_file.file)
+        if image.mode in ("RGBA", "P"):
+            image = image.convert("RGB")
+        width, height = image.size
+    except:
+        raise HTTPException(status_code=500, detail="Something went wrong when reading image")
 
     # inference
-    prediction = model(img)
+    prediction = model(image)
 
     if return_image:
         if os.path.exists('runs'):
@@ -54,8 +64,11 @@ async def detection(
 
     json_result = {
         'model_predict': pred_df.to_dict('records'),
-        'height': img_shape[0],
-        'width': img_shape[1],
+        'height': height,
+        'width': width,
     }
+
+    img_file.file.close()
+    image.close()
 
     return JSONResponse(content=json_result)
