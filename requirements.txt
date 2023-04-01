@@ -12,6 +12,7 @@ torch>=1.7.0  # see https://pytorch.org/get-started/locally (recommended)
 torchvision>=0.8.1
 tqdm>=4.64.0
 tensorboard>=2.4.1
+ultralytics>=8.0.55
 pandas>=1.1.4
 seaborn>=0.11.0
 setuptools>=65.5.1 # Snyk vulnerability fix
