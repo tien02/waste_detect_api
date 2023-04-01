@@ -5,4 +5,5 @@ demo.mp4
 .DS_Store
 weights
 .gitignore
+weights2
 .dockerignore

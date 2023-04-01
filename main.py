@@ -1,20 +1,16 @@
+import config
 import os, shutil
 from PIL import Image
-import cv2 as cv
 import numpy as np
 from fastapi import FastAPI, File, UploadFile, Query, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
-from src import read_img, load_model
+from src import load_model
 
 model = load_model()
 app = FastAPI()
 
 origins = [
-    # "http://localhost.tiangolo.com",
-    # "https://localhost.tiangolo.com",
-    # "http://localhost",
-    # "http://localhost:8000",
     "*",
 ]
 
@@ -39,8 +35,6 @@ async def detection(
     return_image: bool = Query(False, description="Whether return images or just bounding box coordinate"),
     ):
     
-    # read image
-    # img, img_shape = read_img(image_path=img_file.filename)
     try:
         image = Image.open(img_file.file)
         if image.mode in ("RGBA", "P"):
@@ -49,21 +43,36 @@ async def detection(
     except:
         raise HTTPException(status_code=500, detail="Something went wrong when reading image")
 
-    # inference
-    prediction = model(image)
-
     if return_image:
+        return {
+            "message": "This function hasn't supported yet."
+        }
         if os.path.exists('runs'):
             shutil.rmtree('runs')
         prediction.save()
         return FileResponse('./runs/detect/exp/image0.jpg')
     
-    pred_df = prediction.pandas().xyxy[0]   # pandas dataframe
-    if bb_format == 'xywh':
-        pred_df = prediction.pandas().xywh[0]   # pandas dataframe
+    if config.USE_MODEL == "YOLOV5":
+        # inference
+        prediction = model(image)
+
+        pred_df = prediction.pandas().xyxy[0]   # pandas dataframe
+        if bb_format == 'xywh':
+            pred_df = prediction.pandas().xywh[0]   # pandas dataframe
+        prediction_result = pred_df.to_dict('records')
+    
+    else:
+        # inference
+        pred = model.predict(source=image)[0]
+        bb, acc, label = pred.boxes.xyxy.numpy(), pred.boxes.conf.numpy(), pred.boxes.cls.numpy()
+        name = [model.names[int(l)] for l in label]
+        values = np.concatenate((bb, np.expand_dims(acc, axis=1), np.expand_dims(label, axis=1), np.expand_dims(name, axis=1)), axis=1)
+        keys = ["xmin", "ymin", "xmax", "ymax", "confidence", "class", "name"]
+    prediction_result = [dict(zip(keys, val)) for val in values]
+
 
     json_result = {
-        'model_predict': pred_df.to_dict('records'),
+        'model_predict': prediction_result,
         'height': height,
         'width': width,
     }
