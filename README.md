@@ -91,6 +91,10 @@ You can find the backend installation guide [here](https://github.com/GDSC-UIT/s
 
 You can find the AI model installation guide [here](https://github.com/tien02/waste_detect_api/blob/main/README.md#run-on-local)
 
+For our AI service, we use [Yolov5](https://github.com/ultralytics/yolov5) and [Yolov8](https://ultralytics.com/yolov8). [TACO dataset](http://tacodataset.org/) was used to train the model. Although the model's accuracy doesn't seem to be perfect, we're still working on studies to enhance it.
+
+Next, we use the Google Cloud Platform service to host our end-point created by [FastAPI](https://fastapi.tiangolo.com/).
+
 Here are some examples of waste our AI system has detected:
 
 <p float="left">
