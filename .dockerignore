@@ -1,4 +1,4 @@
-__pycache__
+*__pycache__
 runs
 demo.jpg
 demo.mp4
@@ -6,4 +6,5 @@ demo.mp4
 weights
 .gitignore
 weights2
+test
 .dockerignore

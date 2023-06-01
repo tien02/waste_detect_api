@@ -1,0 +1,8 @@
+ultralytics==8.0.112
+opencv_python
+opencv_python_headless
+fastapi==0.95.2
+uvicorn
+python-multipart
+gdown
+termcolor

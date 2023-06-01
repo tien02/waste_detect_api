@@ -1,1 +1,1 @@
-docker run --name api_detect_waste -p 80:80 waste_detection_api
+docker run --name api_detect_waste -p 80:80 -d waste_detection_api

@@ -1,6 +1,10 @@
-ultralytics>=8.0.55
-fastapi==0.93.0
-uvicorn==0.20.0
-python-multipart
-gdown
-termcolor
+fastapi==0.95.2
+gdown==4.6.4
+numpy==1.23.3
+onnxruntime==1.14.1
+opencv_python==4.6.0.66
+opencv_python_headless==4.7.0.68
+Pillow==9.2.0
+Pillow==9.5.0
+termcolor==2.3.0
+ultralytics==8.0.112

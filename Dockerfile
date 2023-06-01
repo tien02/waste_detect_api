@@ -1,14 +1,12 @@
-FROM python:3.10-slim
+FROM python:3.10-buster
 
-WORKDIR /app
+WORKDIR /myapi
 
 RUN apt-get update && apt-get install ffmpeg libsm6 libxext6  -y
-COPY ./requirements.txt /app/requirements.txt
 
-COPY ./*.sh /app/
+COPY ./api /myapi/
+COPY ./uvicorn_run.sh /myapi/
 
-RUN pip install --no-cache-dir -r /app/requirements.txt
-
-COPY ./*.py /app/
+RUN pip install --no-cache-dir -r /myapi/requirements.txt
 
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]

@@ -9,7 +9,7 @@
 
 ## Tools
 
-* Model: [Yolov5](https://github.com/ultralytics/yolov5) & [Yolov8](https://ultralytics.com/yolov8)
+* Model: [Yolov8](https://ultralytics.com/yolov8)
 
 * Dataset: [TACO](http://tacodataset.org) trash detection dataset
 
@@ -19,19 +19,18 @@
 
 | # | Names |
 |---|---|
-| 0 | Bottle |
-| 1 | Cap/Lid |
-| 2 | Broken Glass |
-| 3 | Can |
-| 4 | Carton |
-| 5 | Cup |
-| 6 | Paper |
-| 7 | Plastic |
-| 8 | Straw |
-| 9 | Styrofoam piece |
-| 10 | Unlabeled litter |
-| 11 | Cigarette |
-| 12 | Trash |
+| 0 | Metal |
+| 1 | Plastic Bottle |
+| 2 | Cigarette |
+| 3 | Carton |
+| 4 | Paper |
+| 5 | Plastic Bag |
+| 6 | Glass |
+| 7 | Straw |
+| 8 | Cap/Lid |
+| 9 | Plastic things |
+| 10 | Cup |
+| 11 | Other trash |
 
 ## Run
 
@@ -53,9 +52,4 @@ bash build.sh
 
 ```
 bash run.sh
-```
-
-or run in interative mode to custom the 
-```
-bash run_it_mode.sh
 ```
